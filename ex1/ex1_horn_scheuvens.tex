@@ -1,0 +1,160 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amssymb, amsmath, amsthm, amsfonts, algorithmic, algorithm, graphicx}
+\usepackage{color}
+\usepackage{bbm}
+\usepackage[dvipsnames]{xcolor} 
+\usepackage[colorlinks,linkcolor=blue,citecolor=blue]{hyperref}
+\usepackage{array}
+\usepackage{ifthen}
+\usepackage{mathtools}
+
+\renewcommand{\baselinestretch}{1.1}
+\setlength{\topmargin}{-3pc}
+\setlength{\textheight}{8.5in}
+\setlength{\oddsidemargin}{0pc}
+\setlength{\evensidemargin}{0pc}
+\setlength{\textwidth}{6.5in}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{result}[theorem]{Result}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{assumption}[theorem]{Assumption}
+\numberwithin{equation}{section}
+
+\def \endprf{\hfill {\vrule height6pt width6pt depth0pt}\medskip}
+\renewenvironment{proof}{\noindent {\bf Proof} }{\endprf\par}
+
+% Notational convenience,
+% real numbers 
+\newcommand{\R}{\mathbb{R}}  
+% Expectation operator
+\DeclareMathOperator*{\E}{\mathbb{E}}
+% Probability operator
+\DeclareMathOperator*{\Prob}{\mathbb{P}}
+\renewcommand{\Pr}{\Prob}
+
+% You may define additional macros here.
+
+
+\begin{document}
+
+\begin{center}
+    \sc ML 4101: Mathematics for Machine Learning --- Fall 24
+\end{center}
+
+\noindent Friederike Horn \& Bileam Scheuvens
+
+\section{Exercise 1 (Dictionary Learning)}
+
+\subsection{}
+Let $v = (2, 1, 1)$
+$$D = \left\{
+d_1 = (1, 0, 0),\; d_2 = (0, 1, 0),\; d_3 = (0, 0, 1),\; d_4 = (1, 1, 0),\; d_5 = (0, 1, 1)
+\right\}$$
+Let $A = [d_1,\dots, d_n]$\\
+Express $v$ as a linear combination of exactly $n$ vectors:
+\begin{enumerate}
+  \item[i)]{$n=3$: $$v = A [2,1,1,0,0]^T $$}
+  \item[i)]{$n=4$: $$v = A [-1,-2,1,3,0]^T $$}
+  \item[i)]{$n=5$: $$v = A [1,-2,-1,1,2]^T $$}
+\end{enumerate}
+
+\subsection{}
+Can $v \in \mathbb{R}^3$ be expressed as a linear combination in multiple ways given a dictionary $D$ with five vectors spanning $\mathbb{R}^3$?
+Yes.\\
+Let $D = \{d_1, \dots, d_5\}$. Since $dim(\mathbb{R}^3) < |D|, \exists \lambda'_1, \dots, \lambda'_{n-1}$, such that $d_n = \sum_{i=1}^{n-1} \lambda d_i$.\\
+Thus for any $v = \sum_{i=1}^n \lambda_{vi} d_i = \sum_{i=1}^n \lambda_{vi} + d_n - \sum_{i=1}^{n-1} \lambda d_i$.\\
+
+\subsection{}
+Find a dictionary $D$ in $\mathbb{R}^3$ with minimal number of vectors, such that the following vectors can be expressed as a linear combination of exactly two dictionary vectors.
+
+
+\begin{enumerate}
+  \item[i)]{
+      $v_1 = (1,1,1),\; v_2 = (2,1,1),\; v_3 = (1,2,2)$
+      $D = {v_2,v_3}$, optimal, since lower bound for $|D| = 2$.
+    }
+  \item[ii)]{
+      $v_1 = (1,1,1),\; v_2 = (2,1,0),\; v_3 = (2,1,0)$
+      $D = {v_1, v_2, v_3}$, no better solution exists, since $v_1, v_2, v_3$ are pairwise independent.
+    }
+\end{enumerate}
+
+
+\subsection{}
+Upper and lower bounds on $|D|$ to represent any $v$ in $\mathbb{R}^3$ with at most $n$ vectors.
+\begin{enumerate}
+  \item[i)]{$n=1$ lower: 1 upper: n}
+  \item[ii)]{$n=2$ lower: 2 upper: n}
+  \item[iii)]{$n=3$ lower: 3 upper: 3}
+\end{enumerate}
+
+\section{Exercise 2 (Basis and Dimension)}
+Let $V$ be a finite-dimensional vector space with basis $\mathcal{B} = (v_1,\dots, v_n)$.\\
+Let $v = \sum_{i=1}^n$ with $\lambda_k \neq 0$ for $1 \leq k \leq n$.\\
+Prove that $\tilde{\mathcal{B}} = (v_1, \dots, v_{k-1}, v, v_{k+1}, \dots, v_n ) $ is also a basis of $V$.
+\begin{align*}
+  \tilde{B} &= (B \cup \{v\} \ \{v_k\}\\
+  v &= \lambda_k v_k + (v-\lambda_k v_k )\\
+    &= \lambda_k v_k + \sum_{i=1, i\neq k} \lambda_i v_i
+\end{align*}
+Since $v_k$ is linearly independent of $v_{i\neq k}$, the resulting vector is linearly independent as well.
+
+\section{Exercise 3 (Linear Mappings and Vector Spaces)}
+Let $V$ and $W$ be vector spaces over $F$. Consider $\mathbb{L}(V,W)$ with:
+$$ (S+T)(v) \coloneq Sv + Tv \text{ and } (\lambda T)(v) \coloneq \lambda(Tv) $$
+
+\subsection{}
+Verify that $S +T$ and $\lambda T$ are again linear maps in $\mathbb{L}(V,W)$.\\
+Closed under addition:
+$$
+(S+T)(v + w) = S(v + w) + T(v + w) = S(v) + S(w) + T(v) + T(w) = (S+T)(v) + (S+T)(w)\\
+$$
+$$
+(\lambda T)(v + w) = \lambda (T(v + w)) = \lambda T(v) + \lambda T(w)
+$$
+Closed under scalar multiplication:
+$$
+\lambda (S+T)(v) = \lambda S(v) + \lambda T(v) = \lambda (S(v) + T(v))\\
+$$
+$$
+(\lambda T)(\lambda' v) = \lambda T(\lambda' v) = \lambda \lambda' T(v)
+$$
+
+\subsection{}
+Prove that $\mathbb{L}(V,W)$ with the above operations is a vector space.\\
+\begin{itemize}
+\item{Closed under addition: see above}
+\item{Closed under scalar multiplication: see above}
+\item{Associativity of Addition:
+$$((S+T) +U)(v) = S(v) + T(v) + U(v) = (S + (T+U))(v)$$}
+\item{Commutativity of Addition:
+$$(S+T)(v)=S(v)+T(v)=T(v)+S(v)=(T+S)(v)$$}
+\item{Additive Identity: $0(v)\coloneqq \text{zero-mapping}$
+$$(S+0)(v) = S(v)$$}
+\item{Multiplication Identity: 
+$$1(T(v)) = T(v)$$}
+\item{Additive inverse:
+$$(S+(-S))(v) = 0$$}
+\item{Scalar distributivity:
+$$\lambda (S + T)(v) = \lambda S(v) = \lambda T(v)$$}
+\item{Vector distributivity: 
+$$(\lambda + \lambda')S(v) = \lambda S(v) + \lambda' S(v)$$}
+\end{itemize}
+
+\section{Exercise 4 (Linear Mappings)}
+Let $v_1, \dots, v_n$ be vectors in $V$, $T \in \mathcal{L}(\mathbb{R}^n, V)$ with $T(\lambda_1, \dots, \lambda_n) = \lambda_1 v_1 + \dots + \lambda_n v_n$
+Which property does $T$ need to have such that $v_1, \dots, v_n$:
+\subsection{span}
+$T$ needs to be surjective, which means that it spans the co-domain i.e. $V$.
+\subsection{are linearly independent}
+$T$ needs to be injective, which means that each element in the co-domain is mapped to by at most one in the domain.
+\end{document}
