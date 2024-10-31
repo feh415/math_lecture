@@ -1,0 +1,151 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amssymb, amsmath, amsthm, amsfonts, algorithmic, algorithm, graphicx}
+\usepackage{color}
+\usepackage{bbm}
+\usepackage[dvipsnames]{xcolor} 
+\usepackage[colorlinks,linkcolor=blue,citecolor=blue]{hyperref}
+\usepackage{array}
+\usepackage{ifthen}
+\usepackage{mathtools}
+
+\renewcommand{\baselinestretch}{1.1}
+\setlength{\topmargin}{-3pc}
+\setlength{\textheight}{8.5in}
+\setlength{\oddsidemargin}{0pc}
+\setlength{\evensidemargin}{0pc}
+\setlength{\textwidth}{6.5in}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{result}[theorem]{Result}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{assumption}[theorem]{Assumption}
+\numberwithin{equation}{section}
+
+\def \endprf{\hfill {\vrule height6pt width6pt depth0pt}\medskip}
+\renewenvironment{proof}{\noindent {\bf Proof} }{\endprf\par}
+
+% Notational convenience,
+% real numbers 
+\newcommand{\R}{\mathbb{R}}  
+% Expectation operator
+\DeclareMathOperator*{\E}{\mathbb{E}}
+% Probability operator
+\DeclareMathOperator*{\Prob}{\mathbb{P}}
+\renewcommand{\Pr}{\Prob}
+
+% You may define additional macros here.
+
+
+\begin{document}
+
+\begin{center}
+    \sc ML 4101: Mathematics for Machine Learning --- Fall 24
+\end{center}
+
+\noindent Friederike Horn \& Bileam Scheuvens
+
+Justify all your claims.
+\section{Exercise 1 (Change of Basis, $2+2+1$ points)}
+Consider the linear map $T \in \mathcal{L}\left(\mathbb{R}^3, \mathbb{R}^3\right)$ with $T(x)=\left(-x_1, x_2, 2 x_3\right)^T$ for $x=\left(x_1, x_2, x_3\right)^T \in \mathbb{R}^3$. \\ Consider the standard basis $\mathcal{B}=\left\{e_1, e_2, e_3\right\}$ and the basis $\mathcal{C}=\left\{\left(\begin{array}{l}1 \\ 2 \\ 3\end{array}\right),\left(\begin{array}{l}0 \\ 1 \\ 2\end{array}\right),\left(\begin{array}{l}0 \\ 1 \\ 1\end{array}\right)\right\}$ of $\mathbb{R}^3$.
+\\
+
+a) Find the matrix $M(T, \mathcal{B}, \mathcal{B})$ which corresponds to the linear map $T$.\\
+
+b) Find the transformation matrices $M(\operatorname{Id}, \mathcal{B}, \mathcal{C})$ and  $M(\operatorname{Id}, \mathcal{C}, \mathcal{B})$. \\
+
+c) Find the matrix $M(T, \mathcal{C}, \mathcal{C})$.
+
+\subsection{Solution}
+
+a) $M(T, \mathcal{B}, \mathcal{B}) = \begin{pmatrix}
+	-1 & 0 & 0 \\
+	0 & 1 & 0 \\
+	0 & 0 & 2
+\end{pmatrix}$ \\
+b) $M(\operatorname{Id}, \mathcal{B}, \mathcal{C}) = \begin{pmatrix}
+	1 & 0 & 0 \\
+	-1 & -1& 1 \\
+	-1& 2 & -1
+\end{pmatrix}$, 
+$M(\operatorname{Id}, \mathcal{C}, \mathcal{B}) = 	\begin{pmatrix}
+	1 & 0 & 0 \\
+	2 & 1 & 1 \\
+	3 & 2 & 1
+\end{pmatrix} $   \\
+c) $M(T, \mathcal{C}, \mathcal{C}) = M(\operatorname{Id}, \mathcal{B}, \mathcal{C}) M(T, \mathcal{B}, \mathcal{B})M(\operatorname{Id}, \mathcal{C}, \mathcal{B}) = M(\operatorname{Id}, \mathcal{B}, \mathcal{C})\begin{pmatrix}
+	-1 & 0 & 0 \\
+	2 & 1 & 1 \\
+	6 & 4 & 2
+\end{pmatrix} = \begin{pmatrix}
+-1& 0 & 0 \\
+5  & 3 & 1 \\
+-1 & -2 & 0
+\end{pmatrix}
+$
+\section{Exercise 2 (Matrices, $1+1+1+1+1$ points).}
+Consider the differentiation operator $D=\mathrm{d} / \mathrm{d} t: \mathbb{R}^{\mathbb{R}} \rightarrow \mathbb{R}^{\mathbb{R}}, f \mapsto f^{\prime}$ on the vector space $\mathbb{R}^{\mathbb{R}}$ of all real functions. Below we give different choices of bases $\mathcal{W}$. For each of them, we consider the corresponding subspace $\mathcal{U}:=\operatorname{span}(\mathcal{W})$ and the restricted linear map $\left.D\right|_{\mathcal{U}}: \mathcal{U} \rightarrow \mathbb{R}^{\mathbb{R}}$, which is the differentiation operator just applied to vectors in $\mathcal{U}$. Decide whether range $\left(\left.D\right|_{\mathcal{U}}\right) \subseteq \mathcal{U}$ and if so, state the matrix $\mathcal{M}\left(\left.D\right|_{\mathcal{U}}, \mathcal{W}, \mathcal{W}\right)$.\\
+a) $\mathcal{W}=\left\{e^t, e^{2 t}\right\}$\\
+b) $\mathcal{W}=\left\{1, t^2, t^4\right\}$\\
+c) $\mathcal{W}=\left\{e^t, t e^t\right\}$\\
+d) $\mathcal{W}=\{\sin t, \cos t\}$\\
+e) $\mathcal{W}=\left\{t,(\sin t)^2,(\cos t)^2, \sin t \cos t\right\}$\\
+\subsection{Solution}
+a) $\mathcal{M}\left(\left.D\right|_{\mathcal{U}}, \mathcal{W}, \mathcal{W}\right) = \begin{pmatrix}
+	1 & 0 \\
+	0 & 2
+\end{pmatrix}$\\
+b) $\left(\left.D\right|_{\mathcal{U}}\right) \subsetneq \mathcal{U}$, because $\mathrm{dt^2} / \mathrm{d} t = t \notin \operatorname{span}(\mathcal{W}).$\\
+c) $\mathcal{M}\left(\left.D\right|_{\mathcal{U}}, \mathcal{W}, \mathcal{W}\right) = \begin{pmatrix}
+	1 & 1 \\
+	0 & 1
+\end{pmatrix}$\\
+d)$\mathcal{M}\left(\left.D\right|_{\mathcal{U}}, \mathcal{W}, \mathcal{W}\right) = \begin{pmatrix}
+	0 & -1 \\
+	1 & 0
+\end{pmatrix}$\\
+e)$\mathcal{M}\left(\left.D\right|_{\mathcal{U}}, \mathcal{W}, \mathcal{W}\right) = \begin{pmatrix}
+	0  & 0 & 0 & 0 \\
+	1 & 0 & 0 & -1 \\
+	1 & 0 & 0 & 1  \\
+	0 & 2 & -2 & 0
+\end{pmatrix}$\\
+
+\section{Exercise 3 (Eigenvalues, $2+3$ points).}
+a) Let $A \in \mathbb{R}^{n \times n}$ with $A^k=0$ for some $k \in \mathbb{N}$. Prove that, if $\lambda$ is an eigenvalue of $A$, then $\lambda=0$.\\
+b) Let $V$ be a finite-dimensional vector space and $T: V \rightarrow V$ a linear map such that every $v \in V$ with $v \neq 0$ is an eigenvector of $T$. Prove that $T=\lambda \mathrm{Id}$ for some $\lambda \in \mathbb{R}$.\\ 
+\subsection{Solution}
+a) Let $\lambda$ be an eigenvalue of A with eigenvector v. Then $A^kv = l^k v=0$, where the last equality follows from $A^k = 0$. As the eigenvector cannot be the zero vector it immediately follows that $\lambda=0$.\\
+b) Let $V$ be a finite-dimensional vector space with dimension $n$ and $T: V \rightarrow V$ a linear map such that every $v \in V$ with $v \neq 0$ is an eigenvector of $T$. \\
+If we choose a basis $\{b_i\}_i$ then $T(1,\ldots, 1)= (\lambda_1, \ldots, \lambda_n)= \lambda (1, \dots, 1)$. Here both equalities follow by the definition that $b_i$ is an eigenvector with eigenvalue $\lambda_i$ and $(1, \dots, 1)$ is an eigenvector with eigenvalue $\lambda$. \\
+Therefore, it must be true that $\lambda_i = \lambda$ for all $i$. Secondly, as the basis vectors "select" columns of the matrix $M(T, V, V)$ we know that the matrix must look like $\begin{pmatrix} \lambda_1 && 0 && 0 \\ 0 && \lambda_2 && 0 \\ 0 && 0 && \lambda_3 \end{pmatrix} = \begin{pmatrix} \lambda && 0 && 0 \\ 0 && \lambda && 0 \\ 0 && 0 && \lambda \end{pmatrix}$ and $T = \lambda Id$. 
+\section{Exercise 4 (Power Method, $1+4$ points).}
+Let $A \in \mathbb{R}^{n \times n}$ be a diagonalizable matrix with one unique largest eigenvalue, that is, $\left|\lambda_1\right|>$ $\left|\lambda_2\right|>\ldots>\left|\lambda_n\right|$, where $\lambda_i$ are the eigenvalues. We furthermore assume $\lambda_1>0$.
+We consider the power method, a method to numerically estimate an eigenvector to the largest eigenvalue $\lambda_1$. For an arbitrary initial vector $x_0 \in \mathbb{R}^n$ we recursively define
+$$
+x_{k+1}:=\frac{A x_k}{\left\|A x_k\right\|}
+$$
+a) Prove that $x_k=\frac{A^k x_0}{\left\|A^k x_0\right\|}$.\\
+b) Consider a basis of eigenvectors $v_1, \ldots, v_n$, where $v_i$ belongs to $\lambda_i$, and the representation
+$$
+x_0=c_1 v_1+\ldots+c_n v_n
+$$
+
+Prove that, if $c_1 \neq 0$, the sequence $x_k$ converges to an eigenvector of $\lambda_1$ for $k \rightarrow \infty$.
+\subsection{Solution}
+a) We can prove the assumption by induction. \\
+IA: For $k=1: x_1=\frac{A x_0}{\left\|A x_0\right\|} = \frac{A^1x_0}{\left\|A^1x_0\right\|}$. \\
+IH: Assume that$x_k = \frac{A^kx_0}{\left\|A^kx_0\right\|}$\\
+IS: $x_k+1 = \frac{Ax_k}{\left\|Ax_k\right\|} \stackrel{IH}{=}\frac{AA^kx_0}{\left\|AA^kx_0\right\|} = \frac{A^{k+1}x_0}{\left\|A^{k+1}x_0\right\|}$\\
+b) As $x_{k}:=\frac{A^k x_0}{\left\|A^k x_0\right\|} = \frac{\lambda_1^k c_1 v_1 + \dots + \lambda^k c_n v_n}{\left\| \lambda_1^k c_1 v_1 + \dots + \lambda^k c_n v_n \right\| } $. 
+We bound   $ \frac{\lambda_i^k c_i v_i }{\left\| \lambda_1^k c_1 v_1 + \dots + \lambda^k c_n v_n \right\| }\leq \frac{\lambda_i^k c_i v_i}{\left\| \lambda_1^k c_1 v_1 \right \|}:= d^i_k v_i$.  Now  $d^i_k$ converges to zero for $i\neq 1$. (Proof: Let $\epsilon > 0$, we can define  $\alpha_i = \frac{|\lambda_i|}{|\lambda_1|} <1$. Therefore, we can find a N>=0, such that $\alpha_i^m<\epsilon$ for $m \geq n$. From this is directly follows that $|d^i_k| = \frac{|c_i|}{|d_1|} \alpha_i^k$ converges to zero for $k \to \infty$).  And therefore, $x_k \to \frac{\lambda_i^k c_1 v_1 }{\left\| \lambda_1^k c_1 v_1 + \dots + \lambda^k c_n v_n \right\| } \to cv_1$, where ${\lambda_i^k c_1 }{\left\| \lambda_1^k c_1 v_1 + \dots + \lambda^k c_n v_n \right\| }$. 
+
+
+\end{document}
