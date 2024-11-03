@@ -1,0 +1,164 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amssymb, amsmath, amsthm, amsfonts, algorithmic, algorithm, graphicx}
+\usepackage{color}
+\usepackage{bbm}
+\usepackage[dvipsnames]{xcolor} 
+\usepackage[colorlinks,linkcolor=blue,citecolor=blue]{hyperref}
+\usepackage{array}
+\usepackage{ifthen}
+\usepackage{mathtools}
+
+\renewcommand{\baselinestretch}{1.1}
+\setlength{\topmargin}{-3pc}
+\setlength{\textheight}{8.5in}
+\setlength{\oddsidemargin}{0pc}
+\setlength{\evensidemargin}{0pc}
+\setlength{\textwidth}{6.5in}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{result}[theorem]{Result}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{assumption}[theorem]{Assumption}
+\numberwithin{equation}{section}
+
+\def \endprf{\hfill {\vrule height6pt width6pt depth0pt}\medskip}
+\renewenvironment{proof}{\noindent {\bf Proof} }{\endprf\par}
+
+% Notational convenience,
+% real numbers 
+\newcommand{\R}{\mathbb{R}}  
+% Expectation operator
+\DeclareMathOperator*{\E}{\mathbb{E}}
+% Probability operator
+\DeclareMathOperator*{\Prob}{\mathbb{P}}
+\renewcommand{\Pr}{\Prob}
+
+% You may define additional macros here.
+
+
+\begin{document}
+
+\begin{center}
+    \sc ML 4101: Mathematics for Machine Learning --- Fall 24
+\end{center}
+
+\noindent Friederike Horn \& Bileam Scheuvens
+
+Justify all your claims.
+\section*{Exercise 1 (Symmetric Matrices)}
+\begin{enumerate}
+\item[a)]{
+    Any orthogonal symmetric matrix $A \in \mathbb{R}^{n\times n}$ can only have the eigenvalues $-1$ or $1$.
+  }
+\item[b)]{
+    Consider a symmetric matrix $A \in \mathbb{R}^{n\times n}$ and an orthogonal matrix $Q \in \mathbb{R}^{n\times n}$ and let $\tilde{A} = QAQ^T$. Then $\tilde{A}$ is again symmetric and has the same eigenvalues as $A$.
+  }
+\item[c)]{
+    For any matrix $A \in \mathbb{R}^{n\times n}$ with $A^TA = I_m$ the matrix $AA^T$ is the orthogonal projection onto the space $range(A)$.
+  }
+\end{enumerate}
+\subsection*{Solution}
+\begin{enumerate}
+\item[a)]{
+    Since $A$ is symmetric $A = A^T$ and orthogonal $A^T A = I$ it follows that for any eigenvector $v$ with eigenvalue $\lambda$: $A^T Av = A^2v = Iv = \lambda^2v = v$. Therefore $\lambda$ must be $\sqrt{1}$.
+  }
+\item[b)]{
+  }
+\item[c)]{
+  }
+\end{enumerate}
+
+\section*{Exercise 2 (Scalar product and norms)}
+Consider a normed vector space $(V, ||\cdot||)$. The parallelogram equality states that the norm is induced by a scalar product $\langle \cdot, \cdot \rangle: V \times V \rightarrow \mathbb{R}$ via $||v|| = \sqrt{\langle v, v \rangle}$ if and only if $\forall v, w \in V$ it holds that
+$$ || v + w||^2 + ||v - w||^2 = 2(||v||^2 + ||w||^2)$$
+
+\begin{enumerate}
+\item[a)]{
+    Prove the forward implication.
+  }
+\item[b)]{
+    Let $p > 0$. Prove that there is a sclaar product on $\mathbb{R}^2$ such that the associated norm is given by 
+$$||x|| = (|x_1|^p + |x_2|^p)^{1/p}$$
+$\forall x \in \mathbb{R}^2$ iff $p =2$.
+
+  }
+\item[c)]{
+    Let $(V, ||\cdot||)$ be a normed vector space, where the norm is given by a scalar product. Prove the Pythagorean theorem $||u + v||^2 = ||u||^2 + ||v||^2$ for all orthogonal $u,v \in V$
+
+  }
+\end{enumerate}
+\subsection*{Solution}
+\begin{enumerate}
+\item[a)]{
+$$\langle v, w \rangle = \sum_{i=1}^n v_i w_i$$
+    \begin{align*}
+      ||v + w||^2 ||v - w||^2 &= \left(\sqrt{\sum_{i=1}^n (v_i + w_i)^2}\right)^2 + \left(\sqrt{\sum_{i=1}^n (v_i - w_i)^2}\right)^2\\
+      &= \sum_{i=1}^n (v_i + w_i)^2+ \sum_{i=1}^n (v_i - w_i)^2\\
+      &= \sum_{i=1}^n v_i^2 +2v_i w_i + w_v^2 + \sum_{i=1}^n v_i^2 -2v_i w_i  + w_i^2\\
+      &= \sum_{i=1}^n 2v_i^2 + 2w_v^2 \\
+      &= 2 (\langle v,v \rangle \langle w,w \rangle)\\
+      &= 2 (||v||^2 + ||w||^2)
+    \end{align*}
+  }
+\item[b)]{
+  }
+\item[c)]{
+    $u \perp v \Rightarrow \langle u,v \rangle = 0$
+    \begin{align*}
+      || u + v ||^2 &= \sqrt{\langle u+v, u+v\rangle^2 }\\
+                    &= \sum_{i=1}^n (u+v)^2\\
+                    &= \sum_{i=1}^n u^2 + 2uv + v^2\\
+                    &= \sum_{i=1}^n u_i^2 + \sum_{i=1}^n v_i^2 + 2\sum_{i=1}^n u_i v_i\\
+                    &= ||u||^2 + ||v||^2 + 2*0
+                    &= ||u||^2 + ||v||^2 
+    \end{align*}
+  }
+\end{enumerate}
+\section*{Exercise 3 (Gram-Schmidt orthonormalization)}
+\begin{enumerate}
+\item[a)]{
+    Consider the subspace $V = span(1, x, x^2 , x^3) \subseteq \mathbb{R}^{\mathbb{R}}$ of polynomials with degree $\leq 3$ with the scalar product $\langle f, g\rangle = \int_{-1}^1 f(x)g(x)dx$ for $f, g \in V$. Apply Gram-Schmidt to the basis $1, x, x^2 , x^3$ in order to compute an orthonormal basis of $V$.
+  }
+\item[b)]{
+    What happens if Gram-Schmidt is applied to a list of vectors $(v_1, \dots, v_n)$ that is not linearly independent?
+  }
+\end{enumerate}
+
+\subsection*{Solution}
+\begin{enumerate}
+\item[a)]{
+  }
+\item[b)]{
+    Then the projection of the first non independent vector onto the other vectors will be equal to the vector itself. Subtracting this projection from the vector yields the zero vector and the normalization step therefore divides by 0.
+  }
+\end{enumerate}
+
+\section*{Exercise 4 (Spectral clustering)}
+Let $W \in \mathbb{R}^{n\times n}$ be a symmetric matrix with non-negative entries and $D \in \mathbb{R}^{n\times n}$ the diagonal matrix which contains the row sums of $W$. Define $L := D - W$.
+
+
+\begin{enumerate}
+\item[a)]{
+    Prove that for all $x \in \mathbb{R}^n$ it holds
+    $$ x^t Lx = \frac{1}{2} \sum_{i,j=1}^n w_{i,j} (x_i - x_j)^2$$
+  }
+\item[b)]{
+    Conclude that $L$ is symmetric and positive semi-definite.
+  }
+\item[c)]{
+    Show that the vector of constant ones $\mathbbm{1} = \begin{pmatrix} 1 \\ \vdots \\ 1\end{pmatrix} \in \mathbb{R}^n$ is an eigenvector of $L$.
+  }
+\item[d)]{
+  Solve the constrained minimization problem
+  $$\underset{||x|| = 1}{\underset{x\in \mathbb{R}^n}{min}} x^t Lx \text{ subject to }\langle x, \mathbbm{1} \rangle = 0$$
+}
+\end{enumerate}
+\end{document}
