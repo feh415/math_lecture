@@ -42,6 +42,8 @@
 \renewcommand{\Pr}{\Prob}
 
 % You may define additional macros here.
+\newcommand{\unita}{\begin{pmatrix} 1\\0\end{pmatrix}}
+\newcommand{\unitb}{\begin{pmatrix} 0\\1\end{pmatrix}}
 
 
 \begin{document}
@@ -71,6 +73,7 @@ Justify all your claims.
     Since $A$ is symmetric $A = A^T$ and orthogonal $A^T A = I$ it follows that for any eigenvector $v$ with eigenvalue $\lambda$: $A^T Av = A^2v = Iv = \lambda^2v = v$. Therefore $\lambda$ must be $\sqrt{1}$.
   }
 \item[b)]{
+    
   }
 \item[c)]{
   }
@@ -109,6 +112,15 @@ $$\langle v, w \rangle = \sum_{i=1}^n v_i w_i$$
     \end{align*}
   }
 \item[b)]{
+    Let $v = \unita, w = \unitb$
+    \begin{align*}
+      || v+w||^2  + || v-w||^2 &= 2(||v||^2 +||w||^2)\\
+      || \begin{pmatrix}1\\1\end{pmatrix}||^2  + || \begin{pmatrix}1\\-1\end{pmatrix}||^2 &= 2\left(||\unita||^2 +||\unitb||^2\right)\\
+      ((2)^{1/p})^2 + ((2)^{1/p})^2 &= 2\left( ((1^p)^{1/p})^2 + ((1^p)^{1/p})^2\right)\\
+      2((2)^{1/p})^2 &= 2( 1^2 + 1^2)\\
+      ((2)^{1/p})^2 &= 2\\
+      \sqrt[p]{2} &= \sqrt[2]{2}\\
+    \end{align*}
   }
 \item[c)]{
     $u \perp v \Rightarrow \langle u,v \rangle = 0$
@@ -117,7 +129,7 @@ $$\langle v, w \rangle = \sum_{i=1}^n v_i w_i$$
                     &= \sum_{i=1}^n (u+v)^2\\
                     &= \sum_{i=1}^n u^2 + 2uv + v^2\\
                     &= \sum_{i=1}^n u_i^2 + \sum_{i=1}^n v_i^2 + 2\sum_{i=1}^n u_i v_i\\
-                    &= ||u||^2 + ||v||^2 + 2*0
+                    &= ||u||^2 + ||v||^2 + 2*\langle u,v \rangle\\
                     &= ||u||^2 + ||v||^2 
     \end{align*}
   }
@@ -160,5 +172,23 @@ Let $W \in \mathbb{R}^{n\times n}$ be a symmetric matrix with non-negative entri
   Solve the constrained minimization problem
   $$\underset{||x|| = 1}{\underset{x\in \mathbb{R}^n}{min}} x^t Lx \text{ subject to }\langle x, \mathbbm{1} \rangle = 0$$
 }
+\end{enumerate}
+
+\subsection*{Solution}
+\begin{enumerate}
+  \item[a)]{}
+  \item[b)]{
+      Since both $D$ and $W$ are symmetric any element $l_{i,j} = d_{i,j} + w_{i,j} = d_{j,i} + w_{j,i} = l_{j,i}$.\\ $L$ is positive semi-definite if $x^t Lx \geq 0 \; \forall x$. Since $W$ is non-negative and $(x_i - x_j)^2 \geq 0$, $\sum_{i,j=1}^n w_{i,j} (x_i - x_j)^2 \geq 0$ is satisfied and $L$ is positive semi-definite.
+    }
+  \item[c)]{
+      The i-th entry of $L \mathbbm{1}$ is given by
+      $$d_{i,i} - \sum_{j=1}^n w_{i,j}$$
+      $$= \sum_{j=1}^n w_{i,j}- \sum_{j=1}^n w_{i,j}$$
+      $$=0$$
+      Therefore $\mathbbm{1}$ is an eigenvector with eigenvalue $0$.
+    }
+  \item[d)]{
+      Ordering the eigenvalues $\lambda_1 > \lambda_2 > \dots > \lambda_n$ with $\lambda_1 \geq 0$ from positive semi-definiteness. From c) we know that $\lambda_1 = 0$. Using Rayleigh coefficient with additional constraint of orthogonality to $\mathbbm{1}$ (the eigenvector to $\lambda_1$) we obtain a minimum of $\lambda_2$ at the normed second eigenvector $\frac{v_2}{||v_2||}$.
+    }
 \end{enumerate}
 \end{document}
