@@ -130,16 +130,16 @@ $$\langle v, w \rangle = \sum_{i=1}^n v_i w_i$$
     \end{align*}
   }
 \item[c)]{
-    $u \perp v \Rightarrow \langle u,v \rangle = 0$
-    \begin{align*}
-      || u + v ||^2 &= \sqrt{\langle u+v, u+v\rangle^2 }\\
-                    &= \sum_{i=1}^n (u+v)^2\\
-                    &= \sum_{i=1}^n u^2 + 2uv + v^2\\
-                    &= \sum_{i=1}^n u_i^2 + \sum_{i=1}^n v_i^2 + 2\sum_{i=1}^n u_i v_i\\
-                    &= ||u||^2 + ||v||^2 + 2*\langle u,v \rangle\\
-                    &= ||u||^2 + ||v||^2 
-    \end{align*}
-  }
+Let $(V,\|\cdot\|)$ be a normed vector space, where the norm is given by a scalar product and $u, v \in V$ orthogonal vectors. Then we can write:
+\begin{align*}
+  \|u+v\|^2 &= \langle u+v, u+v\rangle\\
+            &= \langle v, v\rangle + \langle u, u\rangle + \langle v, u\rangle + \langle u, v\rangle\\
+            &=  \langle v, v\rangle + \langle u, u\rangle\\ 
+            &= \|u\|^2+\|v\|^2\\
+\end{align*}
+
+where we used the bilinearity of the scalar product and the fact that $u, v$ are orthogonal and thus $ \langle v, u\rangle = \langle u, v\rangle=0.$
+}
 \end{enumerate}
 \section*{Exercise 3 (Gram-Schmidt orthonormalization)}
 \begin{enumerate}
