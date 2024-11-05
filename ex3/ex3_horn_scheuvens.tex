@@ -44,6 +44,7 @@
 % You may define additional macros here.
 \newcommand{\unita}{\begin{pmatrix} 1\\0\end{pmatrix}}
 \newcommand{\unitb}{\begin{pmatrix} 0\\1\end{pmatrix}}
+\newcommand{\gramint}{\int_{-1}^1}
 
 
 \begin{document}
@@ -73,9 +74,15 @@ Justify all your claims.
     Since $A$ is symmetric $A = A^T$ and orthogonal $A^T A = I$ it follows that for any eigenvector $v$ with eigenvalue $\lambda$: $A^T Av = A^2v = Iv = \lambda^2v = v$. Therefore $\lambda$ must be $\sqrt{1}$.
   }
 \item[b)]{
-    
+Let $A$ be a symmetric matrix and $Q$ an orthogonal matrix. \\ If we define $\tilde{A} = QAQ^T$ then the transpose is given by $\tilde{A}^T = (QAQ^T)^T = Q(Q A)^T = Q A^TQ^T= Q A Q^T = \tilde{A}$. Here we used that $(AB)^T = B^T A^T$ and $(A^T)^T=A$ for the first and second equality and the fact that $A$ is symmetric for the third equality. \\
+Let $v_i$ be an eigenvector of $A$ with eigenvalue $\lambda_i$. If apply the vector $Q v_i$ to $\tilde{A}$ we obtain:\\
+ $\tilde{A}Q v_i  = Q A Q^T Q v_i = Q A v_i = \lambda_i Q v_i$. \\
+ Here we used the orthogonality of $Q$ in the second equation. It follows directly, that if $v_i$ is eigenvector of $A$ with eigenvalue $\lambda_i$, then $Q v_i$ is an eigenvector of $\tilde{A}$ with the same eigenvalue and $A$ and $\tilde{A}$ have the same eigenvalues. \\
   }
 \item[c)]{
+ We  $AA^T$ is the orthogonal projection onto range($A$) iff $ker(AA^T) = \text{range}(A)^\perp$. We first note that the zero vector is in range($A$) and $ker(AA^T)$.\\
+  $\Rightarrow$ Let $v$ be a non-zero vector in $ker(AA^T)$, i.e. $AA^Tv= 0$. Then also $\left < Aw, AA^Tv\right > = 0$ for any vector $w$ in $ \mathbb{R}^{m}$. Writing out the inner product we have: $\left < Aw, AA^Tv\right > = w^T A ^T A A^Tv = w^T I_m A ^T v = \left<Aw, v\right >=0$, for any vector $w$. Therefore, $v$ is in range(A)$^\perp$. \\
+  $\Leftarrow$ Let $v$ be a non-zero vector in range(A)$^\perp$, i.e. $\left< Aw, v\right> = 0$ for any $w \in \mathbb{R}^m$. Writing it out the inner product we have $\left< Aw, v\right> = w^T A^T v = w^T v' = 0$ for any $w \in \mathbb{R}^m$. This means that $v'=A^Tv = 0$ and therefore also $AA^Tv =0$ and $v$ in ker($AA^Tv$).
   }
 \end{enumerate}
 
@@ -147,6 +154,18 @@ $$\langle v, w \rangle = \sum_{i=1}^n v_i w_i$$
 \subsection*{Solution}
 \begin{enumerate}
 \item[a)]{
+    \begin{align*}
+      u_1 &= 1\\
+      e_1 &= \frac{u_1}{||u_1||} = \frac{1}{\sqrt{2}}\\
+      u_2 &= v_2 - \text{proj}_{u_1} (v_2) = x - \frac{\langle v_2, u_1\rangle}{\langle u_1, u_1\rangle}\\
+          &= x - \frac{\gramint x*1dx}{\gramint 1*1dx} = x - \frac{0}{2} = x\\
+      e_2 &= \frac{u_2}{||u_2||} = \sqrt{\frac{3}{2}}x\\
+      u_3 &= v_3 - \frac{\gramint x*x^2}{\gramint x*x} = x^2 - \frac{0}{2/3} = x^2\\
+      e_3 &= \frac{u_3}{||u_3||} = \sqrt{\frac{5}{2}}x^2\\
+      u_4 &= v_4 - \frac{\gramint x^2*x^3}{\gramint x^2*x^2} = x^3 - \frac{0}{2/5} = x^3\\
+      e_4 &= \frac{u_4}{||u_4||} = \sqrt{\frac{7}{2}}x^3\\
+    \end{align*}
+    $$||e_1|| = ||e_2|| = ||e_3|| = ||e_4|| = 1$$
   }
 \item[b)]{
     Then the projection of the first non independent vector onto the other vectors will be equal to the vector itself. Subtracting this projection from the vector yields the zero vector and the normalization step therefore divides by 0.
@@ -176,7 +195,19 @@ Let $W \in \mathbb{R}^{n\times n}$ be a symmetric matrix with non-negative entri
 
 \subsection*{Solution}
 \begin{enumerate}
-  \item[a)]{}
+  \item[a)]{
+\begin{align*}
+	x^T Lx &= \sum_{ij} x_i L_{ij} x_j = \sum_{ij} x_i\left(\sum_{k'}w_{ik'} \delta_{ij} x_j\right) - \sum_{ij} w_{ij}x_i x_j \\
+	&= \sum_{i} x_i\left(\sum_{k'}w_{ik'} x_i\right) - \sum_{ij} w_{ij}x_i x_j \\
+  &= \sum_{i, j} w_{ij} x_i^2 - \sum_{ij} w_{ij}x_i x_j  \\
+	&= \frac{1}{2} \left( 2 \sum_{i, j} w_{ij} x_i^2 - 2\sum_{ij} w_{ij}x_i x_j\right) \\
+	&= \frac{1}{2} \left(  \sum_{i, j} w_{ij} x_i^2 + \sum_{i, j} w_{ji} x_j^2 - 2\sum_{ij}w_{ij}x_i x_j\right) \\
+\text{because of the symmetry of W} w_{ij} = w{ji}:\\
+	&= \frac{1}{2} \left(  \sum_{i, j} w_{ij} x_i^2 + \sum_{i, j} w_{ij} x_j^2 - 2\sum_{ij}w_{ij}x_i x_j\right)\\
+	&= \frac{1}{2} \left(  \sum_{i, j} w_{ij} (x_i^2 +  x_j^2 - 2 x_i x_j)\right)\\
+	&=\frac{1}{2} \left(  \sum_{i, j} w_{ij} (x_i-x_j)^2\right)
+\end{align*} 
+    }
   \item[b)]{
       Since both $D$ and $W$ are symmetric any element $l_{i,j} = d_{i,j} + w_{i,j} = d_{j,i} + w_{j,i} = l_{j,i}$.\\ $L$ is positive semi-definite if $x^t Lx \geq 0 \; \forall x$. Since $W$ is non-negative and $(x_i - x_j)^2 \geq 0$, $\sum_{i,j=1}^n w_{i,j} (x_i - x_j)^2 \geq 0$ is satisfied and $L$ is positive semi-definite.
     }
