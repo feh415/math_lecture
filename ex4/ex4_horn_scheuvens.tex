@@ -1,0 +1,145 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amssymb, amsmath, amsthm, amsfonts, algorithmic, algorithm, graphicx}
+\usepackage{color}
+\usepackage{bbm}
+\usepackage[dvipsnames]{xcolor} 
+\usepackage[colorlinks,linkcolor=blue,citecolor=blue]{hyperref}
+\usepackage{array}
+\usepackage{ifthen}
+\usepackage{mathtools}
+
+\renewcommand{\baselinestretch}{1.1}
+\setlength{\topmargin}{-3pc}
+\setlength{\textheight}{8.5in}
+\setlength{\oddsidemargin}{0pc}
+\setlength{\evensidemargin}{0pc}
+\setlength{\textwidth}{6.5in}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{result}[theorem]{Result}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{assumption}[theorem]{Assumption}
+\numberwithin{equation}{section}
+
+\def \endprf{\hfill {\vrule height6pt width6pt depth0pt}\medskip}
+\renewenvironment{proof}{\noindent {\bf Proof} }{\endprf\par}
+
+% Notational convenience,
+% real numbers 
+\newcommand{\R}{\mathbb{R}}  
+% Expectation operator
+\DeclareMathOperator*{\E}{\mathbb{E}}
+% Probability operator
+\DeclareMathOperator*{\Prob}{\mathbb{P}}
+\renewcommand{\Pr}{\Prob}
+
+% You may define additional macros here.
+\newcommand{\unita}{\begin{pmatrix} 1\\0\end{pmatrix}}
+\newcommand{\unitb}{\begin{pmatrix} 0\\1\end{pmatrix}}
+\newcommand{\gramint}{\int_{-1}^1}
+
+
+\begin{document}
+
+\begin{center}
+    \sc ML 4101: Mathematics for Machine Learning --- Fall 24
+\end{center}
+
+\noindent Friederike Horn \& Bileam Scheuvens
+
+Justify all your claims.
+\section*{Exercise 1 (Principal Component Analysis)}
+\begin{enumerate}
+\item[a)]{
+Suppose $\lambda$ is an eigenvalue to the eigenvector $v$ of $\Sigma$.
+$$\lambda \langle x, x\rangle = \langle \lambda x, x\rangle $$
+$$=  \langle \Sigma x, x\rangle $$
+Since $\Sigma = \bar{\Sigma}$
+$$=  \langle  x, \Sigma x\rangle $$
+$$=  \langle  x, \lambda x\rangle $$
+$$= \bar{\lambda} \langle  x,  x\rangle $$
+If $\lambda = \bar{\lambda}$ then $\lambda$ must be in $\mathbb{R}$.
+
+  }
+\item[b)]{
+    By the Rayleigh coefficient, vector that maximizes the variance is the normed eigenvector $\frac{v_1}{||v_1||}$ corresponding to the largest eigenvalue $\lambda_1$ of $X^TX$. The resulting variance is $\sqrt{\lambda_1}$ i.e. the first singular value $\sigma_1$ of $X$.
+  }
+\item[c)]{
+    Analogously, the vector orthogonal to $v_1$ that maximizes the variance is the normed eigenvector $\frac{v_2}{||v_2||}$ corresponding to the largest eigenvalue $\lambda_2$ of $X^TX$. The resulting variance is the second singular value $\sigma_2$ of $X$.
+  }
+\item[d)]{
+  The k-th principal component is obtained by eigendecomposition of $X^TX$ and ordering the eigenvalues such that $\lambda_1 < \lambda_2 < \dots < \lambda_d$. Then the k-th principal component is $X*v_k$ with variance $\sqrt{\lambda_k}$.
+  To obtain the lower dimensional representation $\tilde{X}$ we multiply the matrix with the eigenvectors of $XX^T$ as columns $\tilde{U}$ by the matrix with diagonal elements $\tilde{\sigma_i} = \sqrt{\lambda_i}$ $\tilde{\Sigma}$ and the matrix with eigenvectors of $X^TX$ as rows $\tilde{V}^T$.
+  $$\tilde{X} = \tilde{U}\tilde{\Sigma}\tilde{V}^T$$
+  }
+\end{enumerate}
+
+\section*{Exercise 2 (Singular Value Decomposition)}
+\begin{enumerate}
+\item[a)]{
+    The singular values are equal to the ordered eigenvalues of $MM^T$ and $M^TM$.
+    $$M^TM = \begin{bmatrix}-4&1&3\\ 2&2&2\end{bmatrix}\begin{bmatrix}-4&2\\ 1&2 \\3&2\end{bmatrix} = \begin{pmatrix}27 & 0\\ 0&12\end{pmatrix}$$
+    Since the result is diagonal, the eigenvalues are easily determined as $\lambda_1=27, \lambda_2=12$ which results in the singular values $\sigma_1 = \sqrt{27}, \sigma_2 = \sqrt{12}, \sigma_3 = 0$.
+  }
+\item[b)]{
+    The singular values of a matrix $A$ are the union of the roots of the eigenvalues of $A^TA$ and $AA^T$. Since the union is commutative, $eigs(AA^T) \cup eigs(A^TA) = eigs(A^TA) \cup eigs(AA^T)$, so the singular values are identical.
+  }
+\item[c)]{
+    Note that $\Sigma * \Sigma^\# = I$ only if $\sigma_i \neq 0 \forall i$, otherwise it acts as $I$ on the subspace on nonzero singular values.
+    \begin{itemize}
+      \item{
+        $$AA^\#A \overset{!}= A$$
+        $$U\Sigma V^T V \Sigma^\# U^T U\Sigma V^T = A$$
+        $$U\Sigma \Sigma^\# \Sigma V^T = A$$
+        $$U \Sigma V^T = A$$
+      }
+    \item{
+        $$A^\# A A^\# \overset{!}{=} A^\#$$
+        $$V\Sigma^\# U^T U\Sigma V^T V\Sigma^\# U^T = A^\#$$
+        $$V\Sigma^\# \Sigma \Sigma^\# U^T = A^\#$$
+        $$V\Sigma^\# U^T = A^\#$$
+  
+      }
+    \item{
+        $$(A A^\#)^T \overset{!}{=} A A^\#$$
+        $$(U\Sigma V^T V \Sigma^\# U^T)^T = A A^\#$$
+        $$U\Sigma^\# V^T V \Sigma U^T = A A^\# $$
+        $$U\Sigma^\# V^T V \Sigma U^T = U\Sigma V^T V \Sigma^\# U^T $$
+        $$U\Sigma^\# \Sigma U^T = U\Sigma \Sigma^\# U^T $$
+      }
+    \item{
+        $$(A^\# A)^T \overset{!}{=} A^\# A$$
+        $$(V\Sigma^\# U^T U \Sigma V^T)^T = A^\# A$$
+        $$V\Sigma U^T U \Sigma^\# V^T = A^\# A$$
+        $$V\Sigma U^T U \Sigma^\# V^T = V\Sigma^\# U^T U \Sigma V^T $$
+        $$V\Sigma \Sigma^\# V^T = V\Sigma^\# \Sigma V^T $$
+      }
+    \end{itemize}
+}
+\end{enumerate}
+\section*{Exercise 3 (Condition Number)}
+\begin{enumerate}
+\item[a)]{
+    First prove that $||Av|| \overset{!}{\leq}  ||A||_2 \cdot ||v||$ 
+    $$||Av|| \leq \underset{x\neq 0}{max} \frac{||Ax||}{||x||} ||v||$$
+    If $||v|| = 0$ this holds since $0 = ||A||_2 \cdot 0$. Otherwise we divide by $||v||$ to obtain:
+    $$\frac{||Av||}{||v||} \leq \underset{x\neq 0}{max} \frac{||Ax||}{||x||}$$
+    This clearly holds.
+    
+
+
+  }
+\item[b)]{
+  }
+\end{enumerate}
+
+
+\end{document}
