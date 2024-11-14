@@ -132,12 +132,19 @@ If $\lambda = \bar{\lambda}$ then $\lambda$ must be in $\mathbb{R}$.
     $$||Av|| \leq \underset{x\neq 0}{max} \frac{||Ax||}{||x||} ||v||$$
     If $||v|| = 0$ this holds since $0 = ||A||_2 \cdot 0$. Otherwise we divide by $||v||$ to obtain:
     $$\frac{||Av||}{||v||} \leq \underset{x\neq 0}{max} \frac{||Ax||}{||x||}$$
-    This clearly holds.
-    
-
-
+    This clearly holds. \\
+    Secondly, 
+$$||\Delta x|| = ||A^{-1} \Delta b|| \leq {||A^{-1}||}_2 \cdot||\Delta b|| = {||A^{-1}||}_2 \cdot ||\Delta b||\cdot \frac{||b||}{||b||} $$
+$$= {||A^{-1}||}_2 \cdot ||\Delta b|| \cdot \frac{||Ax||}{||b||} \leq {||A^{-1}||}_2 \cdot ||\Delta b|| \cdot {||A||}_2 \cdot ||x|| \cdot \frac{1}{||b||}$$
+$$ = \kappa(A) \frac{||\Delta b||}{||b||} \cdot ||x||.$$
+From this the preposition directly follows.\\
   }
 \item[b)]{
+An example where the relative noise on the output $\frac{||\Delta b||}{b} \leq 0.001$ and the relative noise on the input $\frac{||\Delta x||}{||x||} \geq 1 $ is given by the following matrix:
+$$A = \begin{pmatrix} 10000 & 0 \\
+	0 & 1
+\end{pmatrix}$$
+and the vector $\Delta b = (0, 1)$. In this case the input vector is given by $x=(1, 0)$ and such $\Delta x = (0, 1)$ and thus the relative noise of the input $\frac{||\Delta x||}{||x||}=1$ and the output noise is $\frac{1}{10000}$ \leq 0.001$. 
   }
 \end{enumerate}
 
