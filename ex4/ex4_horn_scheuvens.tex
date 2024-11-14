@@ -86,14 +86,14 @@ If $\lambda = \bar{\lambda}$ then $\lambda$ must be in $\mathbb{R}$.
 \begin{enumerate}
 \item[a)]{
     The singular values are equal to the ordered eigenvalues of $MM^T$ and $M^TM$.
-    $$M^TM = \begin{bmatrix}-4&1&3\\ 2&2&2\end{bmatrix}\begin{bmatrix}-4&2\\ 1&2 \\3&2\end{bmatrix} = \begin{pmatrix}27 & 0\\ 0&12\end{pmatrix}$$
-    Since the result is diagonal, the eigenvalues are easily determined as $\lambda_1=27, \lambda_2=12$ which results in the singular values $\sigma_1 = \sqrt{27}, \sigma_2 = \sqrt{12}, \sigma_3 = 0$.
+    $$M^TM = \begin{bmatrix}-4&1&3\\ 2&2&2\end{bmatrix}\begin{bmatrix}-4&2\\ 1&2 \\3&2\end{bmatrix} = \begin{pmatrix}26 & 0\\ 0&12\end{pmatrix}$$
+    Since the result is diagonal, the eigenvalues are easily determined as $\lambda_1=26, \lambda_2=12$ which results in the singular values $\sigma_1 = \sqrt{26}, \sigma_2 = \sqrt{12}, \sigma_3 = 0$.
   }
 \item[b)]{
     The singular values of a matrix $A$ are the union of the roots of the eigenvalues of $A^TA$ and $AA^T$. Since the union is commutative, $eigs(AA^T) \cup eigs(A^TA) = eigs(A^TA) \cup eigs(AA^T)$, so the singular values are identical.
   }
 \item[c)]{
-    Note that $\Sigma * \Sigma^\# = I$ only if $\sigma_i \neq 0 \forall i$, otherwise it acts as $I$ on the subspace on nonzero singular values.
+    For $\Sigma^\# \Sigma \Sigma^\# = \Sigma^\#$ since $\Sigma$ is diagonal, analogously for $\Sigma$.
     \begin{itemize}
       \item{
         $$AA^\#A \overset{!}= A$$
@@ -128,7 +128,7 @@ If $\lambda = \bar{\lambda}$ then $\lambda$ must be in $\mathbb{R}$.
 \section*{Exercise 3 (Condition Number)}
 \begin{enumerate}
 \item[a)]{
-    First prove that $||Av|| \overset{!}{\leq}  ||A||_2 \cdot ||v||$ 
+  First prove that $||Av|| \overset{!}{\leq}  ||A||_2 \cdot ||v||$ 
     $$||Av|| \leq \underset{x\neq 0}{max} \frac{||Ax||}{||x||} ||v||$$
     If $||v|| = 0$ this holds since $0 = ||A||_2 \cdot 0$. Otherwise we divide by $||v||$ to obtain:
     $$\frac{||Av||}{||v||} \leq \underset{x\neq 0}{max} \frac{||Ax||}{||x||}$$
