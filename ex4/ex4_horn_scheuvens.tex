@@ -138,7 +138,12 @@ If $\lambda = \bar{\lambda}$ then $\lambda$ must be in $\mathbb{R}$.
 
   }
 \item[b)]{
-  }
+An example where the relative noise on the output $\frac{||\Delta b||}{b} \leq 0.001$ and the relative noise on the input $\frac{||\Delta x||}{||x||} \geq 1 $ is given by the following matrix:
+$$A = \begin{pmatrix} 10000 & 0 \\
+	0 & 1
+\end{pmatrix}$$
+and the vector $\Delta b = (0, 1)$. In this case the input vector is given by $x=(1, 0)$ and such $\Delta x = (0, 1)$ and thus the relative noise of the input $\frac{||\Delta x||}{||x||}=1$ and the output noise is $\frac{1}{10000}$ \leq 0.001$. }
+  
 \end{enumerate}
 
 
